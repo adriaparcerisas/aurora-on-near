@@ -144,7 +144,7 @@ SELECT
     COUNT(DISTINCT TX_HASH) AS number_transactions,
     SUM(TRANSACTION_FEE/POW(10,24)) AS txn_fees
     FROM near.core.fact_transactions AS tr
-  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '1 WEEK' and receiver_id='aurora.pool.near'
+  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '1 WEEK' and tx_receiver='aurora.pool.near'
     GROUP BY date, date_prev
 	) AS tr
 )
@@ -179,7 +179,7 @@ SELECT
     COUNT(DISTINCT TX_HASH) AS number_transactions,
     SUM(TRANSACTION_FEE/POW(10,24)) AS txn_fees
     FROM near.core.fact_transactions AS tr
-  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '2 WEEKS' and receiver_id='aurora.pool.near'
+  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '2 WEEKS' and tx_receiver='aurora.pool.near'
     GROUP BY date, date_prev
 	) AS tr
 )
@@ -214,7 +214,7 @@ SELECT
     COUNT(DISTINCT TX_HASH) AS number_transactions,
     SUM(TRANSACTION_FEE/POW(10,24)) AS txn_fees
     FROM near.core.fact_transactions AS tr
-  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '3 MONTHS' and receiver_id='aurora.pool.near'
+  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '3 MONTHS' and tx_receiver='aurora.pool.near'
     GROUP BY date, date_prev
 	) AS tr
 )
