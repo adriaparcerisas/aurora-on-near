@@ -27,14 +27,14 @@ st.title('Aurora Near illumination')
 # In[20]:
 
 
-st.markdown('Aurora is a Near Protocol with smart contract capability that aims to act as a community-managed cloud computing platform.  It provides a platform on which developers can build decentralized applications (dapps).')
+st.markdown('Aurora is a solution for executing Ethereum smart contracts on the Near blockchain. We can think like an EVM for Near Protocol, which allows Near to interact with Ethereum smart contracts, it is to say, like a Layer-2 platform.')
 
 
 
 # In[5]:
 
 
-st.markdown('The intention of this analysis is to provide information about the current status of Aurora inside the Near Protocol network in terms of activity by providing metrics such as:')
+st.markdown('Because of during the past months, the Ethereum Layer-2 platforms such as Optimism, Arbitrum and Polygon expeerimented a huge growth, the intention of this analysis is to provide information about the current status of Aurora inside the Near Protocol network in terms of activity by providing metrics such as:')
 st.write('- New users')
 st.write('- Active users')
 st.write('- Executed transactions')
@@ -1604,8 +1604,8 @@ with tab3:
 
 st.subheader('Conclusions')
 st.markdown('Following the structure of the Near Foundation Weekly Transparency Report and using Flipside Crypto and MetricsDAO data to study Aurora, I have been able to develop a tool that tracks the recent Aurora activity in a more user-friendly and clean way.')
-st.markdown('The most interesting thing I have found is the way in which the activity takes place in NEAR. It seems that users tend to use the ecosystem more during specific hours. The peaks seems to be registered from 5:00PM to 8:00PM. The same pattern holds true for active users, transactions and gas used!')
-st.markdown('Furhtermore, the activity since to be increased during the last week in which users, transactions and gas used have been doubled!')
+st.markdown('The most interesting thing I have found is the higher amount of failed transactions that are occurring when users interacts with Aurora contract. In fact, there are some moments when the amount of failed transactions is higher than the success transactions!')
+st.markdown('Furhtermore, even the activity seems remained constant and users used to interact with Aurora smart contracts, the amount of failed smart contract interactions is also higher.')
 st.write('')
 st.markdown('This app has been done by **_Adrià Parcerisas_**, a PhD Biomedical Engineer related to Machine Learning and Artificial intelligence technical projects for data analysis and research, as well as dive deep on-chain data analysis about cryptocurrency projects. You can find me on [Twitter](https://twitter.com/adriaparcerisas)')
 st.write('')
