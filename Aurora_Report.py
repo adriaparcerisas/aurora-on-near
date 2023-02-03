@@ -1457,8 +1457,7 @@ INNER JOIN near.core.fact_receipts as rc
 ON tr.TX_HASH=rc.TX_HASH
 	WHERE ACTION_NAME = 'FunctionCall'
     AND METHOD_NAME <> 'new'
-  	AND date >=CURRENT_DATE-INTERVAL '1 WEEK'
-    and tr.tx_receiver='aurora'
+  	AND date >=CURRENT_DATE-INTERVAL '1 WEEK' and tr.tx_receiver='aurora'
 group by 1,2 order by 1 asc,2 desc
 """
 
@@ -1476,8 +1475,7 @@ INNER JOIN near.core.fact_receipts as rc
 ON tr.TX_HASH=rc.TX_HASH
 	WHERE ACTION_NAME = 'FunctionCall'
     AND METHOD_NAME <> 'new'
-  	AND date >=CURRENT_DATE-INTERVAL '2 WEEKS'
-    and tr.tx_receiver='aurora'
+  	AND date >=CURRENT_DATE-INTERVAL '2 WEEKS' and tr.tx_receiver='aurora'
 group by 1,2 order by 1 asc,2 desc
 """
 
@@ -1495,8 +1493,7 @@ INNER JOIN near.core.fact_receipts as rc
 ON tr.TX_HASH=rc.TX_HASH
 	WHERE ACTION_NAME = 'FunctionCall'
     AND METHOD_NAME <> 'new'
-  	AND date >=CURRENT_DATE-INTERVAL '3 MONTHS'
-    and tr.and tx_receiver='aurora'
+  	AND date >=CURRENT_DATE-INTERVAL '3 MONTHS' and tr.tx_receiver='aurora'
 group by 1,2 order by 1 asc,2 desc
 """
 
