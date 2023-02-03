@@ -1448,7 +1448,7 @@ SELECT
 	date_trunc('hour', call.block_timestamp) as date,
   case when split(split(rc.status_value,':')[0],'{')[1] ilike '%Failure%' then 'Fail execution'
   else 'Successful execution' end as type,
-    COUNT(DISTINCT tr.tx_id) as smart_contracts,
+    COUNT(DISTINCT tr.tx_hash) as smart_contracts,
   sum(smart_contracts) over (partition by type order by date) as cum_smart_contracts
 FROM near.core.fact_actions_events_function_call call
 INNER JOIN near.core.fact_transactions tr
@@ -1467,7 +1467,7 @@ SELECT
 	date_trunc('day', call.block_timestamp) as date,
   case when split(split(rc.status_value,':')[0],'{')[1] ilike '%Failure%' then 'Fail execution'
   else 'Successful execution' end as type,
-    COUNT(DISTINCT tr.tx_id) as smart_contracts,
+    COUNT(DISTINCT tr.tx_hash) as smart_contracts,
   sum(smart_contracts) over (partition by type order by date) as cum_smart_contracts
 FROM near.core.fact_actions_events_function_call call
 INNER JOIN near.core.fact_transactions tr
@@ -1486,7 +1486,7 @@ SELECT
 	date_trunc('week', call.block_timestamp) as date,
   case when split(split(rc.status_value,':')[0],'{')[1] ilike '%Failure%' then 'Fail execution'
   else 'Successful execution' end as type,
-    COUNT(DISTINCT tr.tx_id) as smart_contracts,
+    COUNT(DISTINCT tr.tx_hash) as smart_contracts,
   sum(smart_contracts) over (partition by type order by date) as cum_smart_contracts
 FROM near.core.fact_actions_events_function_call call
 INNER JOIN near.core.fact_transactions tr
