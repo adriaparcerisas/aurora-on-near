@@ -55,7 +55,7 @@ with
   distinct tx_signer,
   min(block_timestamp) as debut
 from near.core.fact_transactions
-where tx_status = 'Success' and tx_receiver='aurora.pool.near'
+where tx_status = 'Success' and tx_receiver='aurora'
 group by 1
   ),
   t2 as (
@@ -78,7 +78,7 @@ with
   distinct tx_signer,
   min(block_timestamp) as debut
 from near.core.fact_transactions
-where tx_status = 'Success' and tx_receiver='aurora.pool.near'
+where tx_status = 'Success' and tx_receiver='aurora'
 group by 1
   ),
   t2 as (
@@ -101,7 +101,7 @@ with
   distinct tx_signer,
   min(block_timestamp) as debut
 from near.core.fact_transactions
-where tx_status = 'Success' and tx_receiver='aurora.pool.near'
+where tx_status = 'Success' and tx_receiver='aurora'
 group by 1
   ),
   t2 as (
@@ -561,7 +561,7 @@ Select
   count(distinct tx_hash) as txs,
   sum(txs) over (order by date) as cum_txs
   From near.core.fact_transactions
-  Where block_timestamp::date >=current_date - INTERVAL '1 WEEK' and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=current_date - INTERVAL '1 WEEK' and tx_receiver='aurora'
   Group by 1
 order by 1 ASC
 """
@@ -572,7 +572,7 @@ Select
   count(distinct tx_hash) as txs,
   sum(txs) over (order by date) as cum_txs
   From near.core.fact_transactions
-  Where block_timestamp::date >=current_date - INTERVAL '2 WEEKS' and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=current_date - INTERVAL '2 WEEKS' and tx_receiver='aurora'
   Group by 1
 order by 1 ASC
 """
@@ -583,7 +583,7 @@ Select
   count(distinct tx_hash) as txs,
   sum(txs) over (order by date) as cum_txs
   From near.core.fact_transactions
-  Where block_timestamp::date >=current_date - INTERVAL '3 MONTHS' and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=current_date - INTERVAL '3 MONTHS' and tx_receiver='aurora'
   Group by 1
 order by 1 ASC
 """
@@ -596,7 +596,7 @@ Select
   count(distinct tx_hash) as txs,
   txs/1440 as tpm
   From near.core.fact_transactions
-  Where block_timestamp::date >=current_date - INTERVAL '1 WEEK' and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=current_date - INTERVAL '1 WEEK' and tx_receiver='aurora'
   Group by 1
 order by 1 ASC
   ),
@@ -605,7 +605,7 @@ order by 1 ASC
   trunc(block_timestamp,'hour') as date,
   count(distinct tx_hash) as failed_txs
   From near.core.fact_transactions
-  Where block_timestamp::date >=CURRENT_DATE - INTERVAL '1 WEEK' and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=CURRENT_DATE - INTERVAL '1 WEEK' and tx_receiver='aurora'
   and tx_status<>'Success'
   Group by date
 order by date ASC
@@ -628,7 +628,7 @@ Select
   count(distinct tx_hash) as txs,
   txs/1440 as tpm
   From near.core.fact_transactions
-  Where block_timestamp::date >=current_date - INTERVAL '2 WEEKS' and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=current_date - INTERVAL '2 WEEKS' and tx_receiver='aurora'
   Group by 1
 order by 1 ASC
   ),
@@ -637,7 +637,7 @@ order by 1 ASC
   trunc(block_timestamp,'day') as date,
   count(distinct tx_hash) as failed_txs
   From near.core.fact_transactions
-  Where block_timestamp::date >=CURRENT_DATE - INTERVAL '2 WEEKS'  and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=CURRENT_DATE - INTERVAL '2 WEEKS'  and tx_receiver='aurora'
   and tx_status<>'Success'
   Group by date
 order by date ASC
@@ -660,7 +660,7 @@ Select
   count(distinct tx_hash) as txs,
   txs/1440 as tpm
   From near.core.fact_transactions
-  Where block_timestamp::date >=current_date - INTERVAL '3 MONTHS' and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=current_date - INTERVAL '3 MONTHS' and tx_receiver='aurora'
   Group by 1
 order by 1 ASC
   ),
@@ -669,7 +669,7 @@ order by 1 ASC
   trunc(block_timestamp,'week') as date,
   count(distinct tx_hash) as failed_txs
   From near.core.fact_transactions
-  Where block_timestamp::date >=CURRENT_DATE - INTERVAL '3 MONTHS'  and tx_receiver='aurora.pool.near'
+  Where block_timestamp::date >=CURRENT_DATE - INTERVAL '3 MONTHS'  and tx_receiver='aurora'
   and tx_status<>'Success'
   Group by date
 order by date ASC
@@ -958,7 +958,7 @@ select
   avg(TRANSACTION_FEE/1e24) as avg_tx_fee
   from  near.core.fact_transactions x
   join near.core.fact_prices y on trunc(x.block_timestamp,'hour')=trunc(y.timestamp,'hour')
-  where x.block_timestamp > getdate() - interval '1 WEEK' and symbol='wNEAR' and tx_receiver='aurora.pool.near'
+  where x.block_timestamp > getdate() - interval '1 WEEK' and symbol='wNEAR' and tx_receiver='aurora'
   group by 1
 """
 
@@ -970,7 +970,7 @@ select
   avg(TRANSACTION_FEE/1e24) as avg_tx_fee
   from  near.core.fact_transactions x
   join near.core.fact_prices y on trunc(x.block_timestamp,'hour')=trunc(y.timestamp,'hour')
-  where x.block_timestamp > getdate() - interval '2 WEEKS' and symbol='wNEAR' and tx_receiver='aurora.pool.near'
+  where x.block_timestamp > getdate() - interval '2 WEEKS' and symbol='wNEAR' and tx_receiver='aurora'
   group by 1
 """
 
@@ -982,7 +982,7 @@ select
   avg(TRANSACTION_FEE/1e24) as avg_tx_fee
   from  near.core.fact_transactions x
   join near.core.fact_prices y on trunc(x.block_timestamp,'hour')=trunc(y.timestamp,'hour')
-  where x.block_timestamp > getdate() - interval '3 MONTHS' and symbol='wNEAR' and tx_receiver='aurora.pool.near'
+  where x.block_timestamp > getdate() - interval '3 MONTHS' and symbol='wNEAR' and tx_receiver='aurora'
   group by 1
 """
 
@@ -994,7 +994,7 @@ select
   avg(gas_used/1e18) as avg_tx_fee
   from  near.core.fact_transactions x
   join near.core.fact_prices y on trunc(x.block_timestamp,'hour')=trunc(y.timestamp,'hour')
-  where x.block_timestamp > getdate() - interval '1 WEEK' and symbol='wNEAR' and tx_receiver='aurora.pool.near'
+  where x.block_timestamp > getdate() - interval '1 WEEK' and symbol='wNEAR' and tx_receiver='aurora'
   group by 1
 """
 
@@ -1006,7 +1006,7 @@ select
   avg(gas_used/1e18) as avg_tx_fee
   from  near.core.fact_transactions x
   join near.core.fact_prices y on trunc(x.block_timestamp,'hour')=trunc(y.timestamp,'hour')
-  where x.block_timestamp > getdate() - interval '2 WEEKS' and symbol='wNEAR' and tx_receiver='aurora.pool.near'
+  where x.block_timestamp > getdate() - interval '2 WEEKS' and symbol='wNEAR' and tx_receiver='aurora'
   group by 1
 """
 
@@ -1018,7 +1018,7 @@ select
   avg(gas_used/1e18) as avg_tx_fee
   from  near.core.fact_transactions x
   join near.core.fact_prices y on trunc(x.block_timestamp,'hour')=trunc(y.timestamp,'hour')
-  where x.block_timestamp > getdate() - interval '3 MONTHS' and symbol='wNEAR' and tx_receiver='aurora.pool.near'
+  where x.block_timestamp > getdate() - interval '3 MONTHS' and symbol='wNEAR' and tx_receiver='aurora'
   group by 1
 """
 
@@ -1526,7 +1526,7 @@ ON tr.TX_HASH=rc.TX_HASH
 	WHERE ACTION_NAME = 'FunctionCall'
     AND METHOD_NAME <> 'new'
   	AND date >=CURRENT_DATE-INTERVAL '1 WEEK'
-    and tr.tx_receiver='aurora.pool.near'
+    and tr.tx_receiver='aurora'
 group by 1,2 order by 1 asc,2 desc
 """
 
@@ -1545,7 +1545,7 @@ ON tr.TX_HASH=rc.TX_HASH
 	WHERE ACTION_NAME = 'FunctionCall'
     AND METHOD_NAME <> 'new'
   	AND date >=CURRENT_DATE-INTERVAL '2 WEEKS'
-    and tr.tx_receiver='aurora.pool.near'
+    and tr.tx_receiver='aurora'
 group by 1,2 order by 1 asc,2 desc
 """
 
@@ -1564,7 +1564,7 @@ ON tr.TX_HASH=rc.TX_HASH
 	WHERE ACTION_NAME = 'FunctionCall'
     AND METHOD_NAME <> 'new'
   	AND date >=CURRENT_DATE-INTERVAL '3 MONTHS'
-    and tr.and tx_receiver='aurora.pool.near'
+    and tr.and tx_receiver='aurora'
 group by 1,2 order by 1 asc,2 desc
 """
 
