@@ -118,36 +118,22 @@ order by 1 asc
 """
 
 sql4="""
-WITH swaps AS (
-  SELECT
-  block_timestamp,
-  logs[0] AS log,
-  substring(log, 1, CHARINDEX(' wrap.near for', log)) AS first_part,
-  regexp_replace(first_part, '[^0-9]', '')/pow(10, 24) AS near_amount,
-  substring(log, CHARINDEX('for', log), 100) AS second_part,
-  substring(second_part, 1, CHARINDEX('dac', second_part)-2) AS second_part_amount,
-  regexp_replace(second_part_amount, '[^0-9]', '')/pow(10,6) AS usdt_amount
-  FROM near.core.fact_receipts
-  WHERE logs[0] like 'Swapped % wrap.near for % dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near'
-  and block_timestamp::date>=CURRENT_DATE-INTERVAL '1 WEEK' and receiver_id='aurora.pool.near'
-)
 SELECT
 *,
 ROUND((active_users - active_users_prev)/active_users_prev * 100,2) AS pct_diff_active,
 ROUND((number_transactions - number_transactions_prev)/number_transactions_prev * 100,2) AS pct_diff_transactions,
-ROUND((txn_fees_usd - txn_fees_prev)/txn_fees_prev * 100,2) AS pct_diff_txn_fees
+ROUND((txn_fees - txn_fees_prev)/txn_fees_prev * 100,2) AS pct_diff_txn_fees
 FROM
 (
 SELECT
 *,
 LAG(active_users,1) OVER (ORDER BY date) active_users_prev,
 LAG(number_transactions,1) OVER (ORDER BY date) number_transactions_prev,
-LAG(txn_fees_usd) OVER (ORDER BY date) txn_fees_prev
+LAG(txn_fees) OVER (ORDER BY date) txn_fees_prev
 FROM
 (
 SELECT
-  tr.*,
-  txn_fees*np.price AS txn_fees_usd
+  tr.*
   FROM
   	(
     SELECT
@@ -158,54 +144,31 @@ SELECT
     COUNT(DISTINCT TX_HASH) AS number_transactions,
     SUM(TRANSACTION_FEE/POW(10,24)) AS txn_fees
     FROM near.core.fact_transactions AS tr
-  	WHERE date < CURRENT_DATE
+  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '1 WEEK' and receiver_id='aurora.pool.near'
     GROUP BY date, date_prev
 	) AS tr
-  INNER JOIN (
-  SELECT
-  DATE_TRUNC('hour',block_timestamp) AS date,
-  avg(usdt_amount)/avg(near_amount) AS price
-  FROM swaps
-  GROUP BY date
-  ) AS np
-  ON tr.date=np.date
 )
 )
 ORDER BY date DESC
 """
 
 sql5="""
-WITH swaps AS (
-  -- Credit to 0xHaM☰d for the swaps
-  SELECT
-  block_timestamp,
-  logs[0] AS log,
-  substring(log, 1, CHARINDEX(' wrap.near for', log)) AS first_part,
-  regexp_replace(first_part, '[^0-9]', '')/pow(10, 24) AS near_amount,
-  substring(log, CHARINDEX('for', log), 100) AS second_part,
-  substring(second_part, 1, CHARINDEX('dac', second_part)-2) AS second_part_amount,
-  regexp_replace(second_part_amount, '[^0-9]', '')/pow(10,6) AS usdt_amount
-  FROM near.core.fact_receipts
-  WHERE logs[0] like 'Swapped % wrap.near for % dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near'
-  and block_timestamp::date>=CURRENT_DATE-INTERVAL '2 WEEKS' and receiver_id='aurora.pool.near'
-)
 SELECT
 *,
 ROUND((active_users - active_users_prev)/active_users_prev * 100,2) AS pct_diff_active,
 ROUND((number_transactions - number_transactions_prev)/number_transactions_prev * 100,2) AS pct_diff_transactions,
-ROUND((txn_fees_usd - txn_fees_prev)/txn_fees_prev * 100,2) AS pct_diff_txn_fees
+ROUND((txn_fees - txn_fees_prev)/txn_fees_prev * 100,2) AS pct_diff_txn_fees
 FROM
 (
 SELECT
 *,
 LAG(active_users,1) OVER (ORDER BY date) active_users_prev,
 LAG(number_transactions,1) OVER (ORDER BY date) number_transactions_prev,
-LAG(txn_fees_usd) OVER (ORDER BY date) txn_fees_prev
+LAG(txn_fees) OVER (ORDER BY date) txn_fees_prev
 FROM
 (
 SELECT
-  tr.*,
-  txn_fees*np.price AS txn_fees_usd
+  tr.*
   FROM
   	(
     SELECT
@@ -216,54 +179,31 @@ SELECT
     COUNT(DISTINCT TX_HASH) AS number_transactions,
     SUM(TRANSACTION_FEE/POW(10,24)) AS txn_fees
     FROM near.core.fact_transactions AS tr
-  	WHERE date < CURRENT_DATE
+  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '2 WEEKS' and receiver_id='aurora.pool.near'
     GROUP BY date, date_prev
 	) AS tr
-  INNER JOIN (
-  SELECT
-  DATE_TRUNC('day',block_timestamp) AS date,
-  avg(usdt_amount)/avg(near_amount) AS price
-  FROM swaps
-  GROUP BY date
-  ) AS np
-  ON tr.date=np.date
 )
 )
 ORDER BY date DESC
 """
 
 sql6="""
-WITH swaps AS (
-  -- Credit to 0xHaM☰d for the swaps
-  SELECT
-  block_timestamp,
-  logs[0] AS log,
-  substring(log, 1, CHARINDEX(' wrap.near for', log)) AS first_part,
-  regexp_replace(first_part, '[^0-9]', '')/pow(10, 24) AS near_amount,
-  substring(log, CHARINDEX('for', log), 100) AS second_part,
-  substring(second_part, 1, CHARINDEX('dac', second_part)-2) AS second_part_amount,
-  regexp_replace(second_part_amount, '[^0-9]', '')/pow(10,6) AS usdt_amount
-  FROM near.core.fact_receipts
-  WHERE logs[0] like 'Swapped % wrap.near for % dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near'
-  and block_timestamp::date>=CURRENT_DATE-INTERVAL '3 MONTHS' and receiver_id='aurora.pool.near'
-)
 SELECT
 *,
 ROUND((active_users - active_users_prev)/active_users_prev * 100,2) AS pct_diff_active,
 ROUND((number_transactions - number_transactions_prev)/number_transactions_prev * 100,2) AS pct_diff_transactions,
-ROUND((txn_fees_usd - txn_fees_prev)/txn_fees_prev * 100,2) AS pct_diff_txn_fees
+ROUND((txn_fees - txn_fees_prev)/txn_fees_prev * 100,2) AS pct_diff_txn_fees
 FROM
 (
 SELECT
 *,
 LAG(active_users,1) OVER (ORDER BY date) active_users_prev,
 LAG(number_transactions,1) OVER (ORDER BY date) number_transactions_prev,
-LAG(txn_fees_usd) OVER (ORDER BY date) txn_fees_prev
+LAG(txn_fees) OVER (ORDER BY date) txn_fees_prev
 FROM
 (
 SELECT
-  tr.*,
-  txn_fees*np.price AS txn_fees_usd
+  tr.*
   FROM
   	(
     SELECT
@@ -274,17 +214,9 @@ SELECT
     COUNT(DISTINCT TX_HASH) AS number_transactions,
     SUM(TRANSACTION_FEE/POW(10,24)) AS txn_fees
     FROM near.core.fact_transactions AS tr
-  	WHERE date < CURRENT_DATE
+  	WHERE date < CURRENT_DATE and block_timestamp::date>=CURRENT_DATE-INTERVAL '3 MONTHS' and receiver_id='aurora.pool.near'
     GROUP BY date, date_prev
 	) AS tr
-  INNER JOIN (
-  SELECT
-  DATE_TRUNC('week',block_timestamp) AS date,
-  avg(usdt_amount)/avg(near_amount) AS price
-  FROM swaps
-  GROUP BY date
-  ) AS np
-  ON tr.date=np.date
 )
 )
 ORDER BY date DESC
