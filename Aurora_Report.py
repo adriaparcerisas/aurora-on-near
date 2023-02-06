@@ -225,7 +225,7 @@ ORDER BY date DESC
 # In[11]:
 
 
-st.experimental_memo(ttl=21600)
+st.experimental_memo(ttl=1000000)
 @st.cache
 def compute(a):
     results=sdk.query(a)
@@ -618,7 +618,7 @@ order by date ASC
 
 
 
-st.experimental_memo(ttl=21600)
+st.experimental_memo(ttl=1000000)
 @st.cache
 def compute2(a):
     results=sdk.query(a)
@@ -956,7 +956,7 @@ select
 
 
 
-st.experimental_memo(ttl=21600)
+st.experimental_memo(ttl=1000000)
 @st.cache
 def compute(a):
     results=sdk.query(a)
@@ -1498,7 +1498,7 @@ group by 1,2 order by 1 asc,2 desc
 """
 
 
-st.experimental_memo(ttl=21600)
+st.experimental_memo(ttl=1000000)
 @st.cache
 def compute(a):
     data=sdk.query(a)
